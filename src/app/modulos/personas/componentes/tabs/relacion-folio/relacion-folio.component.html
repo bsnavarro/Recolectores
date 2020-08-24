@@ -1,0 +1,204 @@
+<div class="container pt-5 text-center"
+     *ngIf="persona?.personaRelacionFoliosNucleo && persona?.personaRelacionFoliosNucleo.length === 0">
+
+
+  <button type="button" class="btn btn-primary" (click)="crearFolioFamiliar()">
+    CREAR FOLIO FAMILIAR
+  </button>
+  <button type="button" *ngIf="cantidadDeReportesPendientes > 0" class="btn  btn-primary"
+          (click)="reporteCambio()" matTooltip="Reporte Cambio" matBadge="{{cantidadDeReportesPendientes}}"
+          matBadgePosition="above after" matBadgeColor="{{cantidadDeReportesPendientes > 0 ? 'warn' : 'primary' }}">
+    <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
+  </button>
+
+  <span class="pr-1"></span>
+
+  <button type="button" *ngIf="cantidadDeReportesPendientes == 0" class="btn  btn-primary"
+          (click)="reporteCambio()" matTooltip="Reporte Cambio">
+    <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
+  </button>
+
+
+  <p class="aviso pt-2 text-center">Se va a validar el estado en el Ministerio de Hacienda y su relación con otros
+    folios</p>
+
+
+</div>
+
+
+<div class="container pt-5"
+     *ngIf="persona?.personaRelacionFoliosNucleo && persona?.personaRelacionFoliosNucleo.length > 0">
+
+  <div class="alert alert-danger text-center" role="alert" *ngIf="this.cantidadDeReportesPendientes > 0">
+    Por favor genere e imprima los documentos de los cambios realizados, en el botón con el siguiente icono
+    <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
+  </div>
+
+  <div class="row p-2">
+
+    <div class="col-9">
+      <mat-form-field appearance="outline">
+        <mat-label>Regimen</mat-label>
+        <input type="text" matInput
+               [ngModel]="persona?.personaTributacion?.personaTributacionRegimenByCodigoRegimen?.descripcion"
+               [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <input type="text" matInput [ngModel]="persona?.personaTributacion?.estadoHacienda" [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Emite Factura Electr.</mat-label>
+        <mat-select
+          [disabled]="!persona?.personaCaracteristicas?.editarRelacionFolio || !persona?.personaTributacion?.permiteEditarGeneraFC"
+          [value]="!persona?.personaTributacion?.generaFacturaCompra"
+          (selectionChange)="actualizarPersonaTributacion()">
+          <mat-option [value]="true">
+            SI
+          </mat-option>
+          <mat-option [value]="false">
+            NO
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <div class="col-3 text-right">
+
+      <button type="button" class="btn btn-primary"
+              [disabled]="!this.persona?.personaCaracteristicas?.editarRelacionFolio"
+              (click)="estadosMetodos(relacionNucleo)">
+        {{estados(relacionNucleo)}}
+      </button>
+
+    </div>
+
+  </div>
+
+  <hr>
+
+  <div class="row p-0 m-0">
+    <div class="col-xl-10 col-sm-12">
+
+      <mat-form-field appearance="" class="p-1 m-0" fxFlex="15">
+        <mat-label>Folio</mat-label>
+        <input type="number" matInput placeholder="Número folio" [formControl]="folioRelacion"
+               (keyup.enter)="buscarPersonaRelacion();" (change)="personaRelacionFolio = undefined">
+
+        <button mat-icon-button matSuffix [disabled]="folioRelacion.hasError('required')"
+                (click)="buscarPersonaRelacion();">
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'search']"></fa-icon>
+        </button>
+
+        <mat-error *ngIf="folioRelacion.hasError('required')">Ingrese un folio valido</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="p-1 m-0" fxFlex="20">
+        <mat-label>Identificación</mat-label>
+        <input type="text" matInput [ngModel]="personaRelacionFolio?.identificacionRelacion" [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field class="p-1 m-0" fxFlex="50">
+        <mat-label>Nombre</mat-label>
+        <input type="text" matInput [ngModel]="personaRelacionFolio?.nombreRelacion" [disabled]="true">
+      </mat-form-field>
+
+
+      <mat-form-field class="top-input" fxFlex="15">
+        <mat-label>Relación Folio</mat-label>
+        <mat-select [(ngModel)]="idRelacionFolio">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let tipo of listaTiposRelacion" [value]="tipo.idRelacionFolio">
+            {{tipo.descripcion}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+    </div>
+
+    <div class="col-xl-2 col-sm-12 p-2 text-right">
+      <button type="button" class="btn  btn-primary" (click)="guardarRelacion()"
+              [disabled]="!this.persona?.personaCaracteristicas?.editarRelacionFolio || relacionNucleo.estadoRelacion === 'CAMBIO NUCLEO'" matTooltip="Guardar">
+        <fa-icon [icon]="['fas', 'save']"></fa-icon>
+      </button>
+      <span class="pl-1"></span>
+
+      <button type="button" *ngIf="cantidadDeReportesPendientes > 0" class="btn  btn-primary"
+              (click)="reporteCambio()" matTooltip="Reporte Cambio" matBadge="{{cantidadDeReportesPendientes}}"
+              matBadgePosition="above after" matBadgeColor="{{cantidadDeReportesPendientes > 0 ? 'warn' : 'primary' }}">
+        <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
+      </button>
+
+
+      <button type="button" *ngIf="cantidadDeReportesPendientes == 0" class="btn  btn-primary"
+              (click)="reporteCambio()" matTooltip="Reporte Cambio">
+        <fa-icon [icon]="['fas', 'file-alt']"></fa-icon>
+      </button>
+
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col"># Folio</th>
+        <th scope="col">Identificación</th>
+        <th scope="col">Nombre Completo</th>
+        <th scope="col">Relación</th>
+        <th scope="col">Estado</th>
+        <th scope="col" class="text-right">Opciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let relacion of persona?.personaRelacionFoliosNucleo | sortBy:'asc':'fechaIngreso'">
+        <th scope="row">{{relacion.numeroFolio}}</th>
+        <td>{{relacion.identificacionRelacion}}</td>
+        <td>{{relacion.nombreRelacion}}</td>
+
+        <td>
+          {{relacion.personaRelacionFolioTipoByIdRelacionFolio.descripcion}}
+        </td>
+
+        <td>
+          <!--<fa-icon *ngIf="relacion.nucleo" matListIcon matSuffix [icon]="['fas', 'check']"></fa-icon>-->
+          {{relacion.estadoRelacion}}
+        </td>
+
+        <td class="text-right" *ngIf="!relacion.nucleo">
+          <button *ngIf="!relacion.nucleo"
+                  [disabled]="!this.persona?.personaCaracteristicas?.editarRelacionFolio || relacionNucleo.estadoRelacion === 'CAMBIO NUCLEO'"
+                  type="button" class="btn btn-outline-warning"
+                  (click)="editarRelacion(relacion)" matTooltip="Editar">
+            <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+          </button>
+          <span class="p-1"></span>
+          <button *ngIf="!relacion.nucleo"
+                  [disabled]="!this.persona?.personaCaracteristicas?.editarRelacionFolio || relacionNucleo.estadoRelacion === 'CAMBIO NUCLEO'"
+                  type="button" class="btn btn-outline-danger" (click)="borrarRelacion(relacion)"
+                  matTooltip="Eliminar">
+            <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+          </button>
+        </td>
+
+        <td class="text-right" *ngIf="relacion.nucleo">
+<!--          <button-->
+<!--            [disabled]="!this.persona?.personaCaracteristicas?.editarRelacionFolio || relacionNucleo.estadoRelacion !== 'INSCRITO'"-->
+<!--            type="button" class="btn btn-outline-success" (click)="cambioNucleo()"-->
+<!--            matTooltip="Cambio de nucleo">-->
+<!--            <fa-icon [icon]="['fas', 'exchange-alt']"></fa-icon>-->
+<!--          </button>-->
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

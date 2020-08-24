@@ -1,0 +1,18 @@
+mat-selection-list, mat-nav-list {
+  height: -webkit-fill-available;
+  overflow: auto;
+}
+.principal {
+  height: -webkit-fill-available;
+}
+
+mat-list-option, mat-list-item {
+  border-bottom: groove #9E9E9E;
+  border-bottom-width: thin;
+}
+
+mat-card {
+  padding: 8px;
+}
+
+

@@ -1,0 +1,27 @@
+<mat-toolbar [style.margin-bottom]="'1px'" class="mat-elevation-z2" fxLayoutGap="10px">
+
+  <!--<button mat-icon-button id="menu" (click)="navService.openNav()" *ngIf="mostrarMenu">-->
+    <!--<mat-icon>menu</mat-icon>-->
+  <!--</button>-->
+
+  <span style="width: 100%;text-align: center">{{datosModulo?.nombreModulo}}</span>
+
+  <button mat-icon-button [matMenuTriggerFor]="infoUsuario">
+  <fa-icon matListIcon matSuffix [icon]="['fas', 'user']"></fa-icon>
+  </button>
+
+  <mat-menu #infoUsuario="matMenu">
+  <button mat-menu-item [disabled]="true">
+
+  <fa-icon matListIcon matSuffix [icon]="['fas', 'user']"></fa-icon>
+  {{getUsuario().nombre}}
+  </button>
+  <button mat-menu-item (click)="salir();">
+
+  <fa-icon matListIcon matSuffix [icon]="['fas', 'sign-out-alt']"></fa-icon>
+  Cerrar sesión
+  </button>
+  </mat-menu>
+
+</mat-toolbar>
+

@@ -1,0 +1,216 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <h1>{{colaboradorUnidad.identificacion}} - {{colaboradorUnidad.nombreCompleto}}</h1>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <mat-card-subtitle>{{colaboradorUnidad.puesto}} - PERIODO: {{colaboradorUnidad.periodo}} -
+      PLANILLA {{colaboradorUnidad.descripcionPlanilla}} Total Horas: {{colaboradorUnidad.horasP}}</mat-card-subtitle>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<form #ColaboradorForm="ngForm" (submit)="actualizarHoraColaborador(ColaboradorForm)"
+      (keydown.enter)="$event.preventDefault()">
+  <mat-card>
+    <h3 class="mat-h3" *ngIf="colaboradorUnidad.poseeVacaciones">
+      <fa-icon matListIcon matSuffix [icon]="['fas', 'exclamation']"></fa-icon>
+      El colaborador cuenta con vacaciones para este periodo
+    </h3>
+
+    <h3 class="mat-h3" *ngIf="colaboradorUnidad.poseeIncapacidades">
+      <fa-icon matListIcon matSuffix [icon]="['fas', 'exclamation']"></fa-icon>
+      El colaborador cuenta con incapacidad laboral para este periodo
+    </h3>
+
+    <mat-card-content>
+      <h5>Diurnas</h5>
+      <div class="row">
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ordinaria</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasD.invalid }"
+                   name="horasD" #horasD="ngModel"
+                   (keydown.enter)="focus('horasAjusteD')"
+                   [disabled]=colaboradorUnidad.desHabilitado
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasD" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ajuste</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasAjusteD.invalid }"
+                   name="horasAjusteD" #horasAjusteD="ngModel"
+                   (keydown.enter)="focus('horasExtraD')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasAjusteD" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Extra</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasExtraD.invalid }"
+                   name="horasExtraD" #horasExtraD="ngModel"
+                   (keydown.enter)="focus('horasDobleD')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasExtraD" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Doble</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasDobleD.invalid }"
+                   name="horasDobleD" #horasDobleD="ngModel"
+                   (keydown.enter)="focus('horasM')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasDobleD" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content>
+      <h5>Mixtas</h5>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ordinaria</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasM.invalid }"
+                   name="horasM" #horasM="ngModel"
+                   [disabled]=colaboradorUnidad.desHabilitado
+                   (keydown.enter)="focus('horasAjusteM')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasM" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ajuste</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasAjusteM.invalid }"
+                   name="horasAjusteM" #horasAjusteM="ngModel"
+                   (keydown.enter)="focus('horasExtraM')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasAjusteM" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Extra</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasExtraM.invalid }"
+                   name="horasExtraM" #horasExtraM="ngModel"
+                   (keydown.enter)="focus('horasDobleM')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasExtraM" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Doble</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasDobleM.invalid }"
+                   name="horasDobleM" #horasDobleM="ngModel"
+                   (keydown.enter)="focus('horasN')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasDobleM" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-content>
+      <h5>Nocturnas</h5>
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ordinaria</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasN.invalid }"
+                   name="horasN" #horasN="ngModel"
+                   [disabled]=colaboradorUnidad.desHabilitado
+                   (keydown.enter)="focus('horasAjusteN')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasN" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Ajuste</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasAjusteN.invalid }"
+                   name="horasAjusteN" #horasAjusteN="ngModel"
+                   (keydown.enter)="focus('horasExtraN')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasAjusteN" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Extra</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasExtraN.invalid }"
+                   name="horasExtraN" #horasExtraN="ngModel"
+                   (keydown.enter)="focus('horasDobleN')"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasExtraN" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Doble</mat-label>
+            <input type="number" class="form-control" matInput
+                   min="0" step="0.01"
+                   [ngClass]="{ 'is-invalid': !ColaboradorForm.pristine && ColaboradorForm.submitted && horasDobleN.invalid }"
+                   name="horasDobleN" #horasDobleN="ngModel"
+                   (focus)="$event.target.select();"
+                   [(ngModel)]="colaboradorUnidad.horasDobleN" required/>
+            <div class="invalid-feedback">Campo requerido</div>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button type="submit" mat-raised-button matTooltip="Guardar Horas Colaborador">
+        GUARDAR
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+
+</form>

@@ -1,0 +1,133 @@
+<mat-dialog-content>
+  <mat-toolbar style="width: 100%" class="mat-elevation-z2 mb-2" id="topFincas">
+    <h4 class="display-p mx-auto">{{textoModo}} Fincas</h4>
+    <i class="material-icons  cerrar-modal" (click)="cerrarModalFincas()">
+      close
+    </i>
+  </mat-toolbar>
+
+  <div class="container-fluid">
+    <mat-card class="mx-auto text-center mat-elevation-z5 mt-2" *ngIf="mostratCardFinca">
+      <form [formGroup]="fincaForm" class="example-form text-center"
+            (submit)="crearModificarFinca()">
+        <h4 class="display-11  text-center">{{accionActualFinca}} Finca</h4>
+        <i class="material-icons" (click)="cancelarFincaCardView()"
+           style="float: right;transform: translateY(-50px);cursor: pointer;">
+          close
+        </i>
+
+        <div class="col-md-10 mx-auto">
+          <div class="row">
+
+            <div class="col-md-6 mx-auto text-center">
+              <mat-form-field class="text-center" style="width: 90%;">
+                <input maxlength="30" type="text" matInput placeholder="Codigo" [(ngModel)]="fincaData.codigo"
+                       class="form-control" formControlName="codigo"
+                       [ngClass]="{ 'is-invalid': controlsFincaForm.codigo.errors && !initForm }">
+                <div *ngIf="controlsFincaForm.codigo.errors && !initForm" class="invalid-feedback">
+                  <div *ngIf="controlsFincaForm.codigo.errors.required && !initForm">Debe ingresar el dato
+                    solicitado
+                  </div>
+                </div>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mx-auto text-center">
+              <mat-form-field class="text-center" style="width: 90%;">
+                <input maxlength="30" type="text" matInput placeholder="Nombre Finca" [(ngModel)]="fincaData.nombreFinca"
+                       class="form-control" formControlName="nombreFinca"
+                       [ngClass]="{ 'is-invalid': controlsFincaForm.nombreFinca.errors && !initForm }">
+                <div *ngIf="controlsFincaForm.nombreFinca.errors && !initForm" class="invalid-feedback">
+                  <div *ngIf="controlsFincaForm.nombreFinca.errors.required && !initForm">Debe ingresar el dato
+                    solicitado
+                  </div>
+                </div>
+              </mat-form-field>
+            </div>
+
+            <div class="col-md-6 mx-auto mt-2">
+              <mat-form-field class="text-center" style="width: 90%">
+                <mat-label>Fecha Inspección</mat-label>
+                <input readonly class="form-control" matInput formControlName="fechaInspeccion"
+                       [(ngModel)]="fincaData.fechaInspeccion"
+                       [matDatepicker]="pickerFechaInspeccion"
+                       [ngClass]="{ 'is-invalid': controlsFincaForm.fechaInspeccion.errors && !initForm }">
+                <mat-datepicker-toggle matSuffix [for]="pickerFechaInspeccion"></mat-datepicker-toggle>
+                <mat-datepicker  #pickerFechaInspeccion></mat-datepicker>
+                <div
+                  *ngIf="controlsFincaForm.fechaInspeccion.errors && !initForm"
+                  class="invalid-feedback">
+                  <div
+                    *ngIf="controlsFincaForm.fechaInspeccion.errors && ! initForm">
+                    Debe
+                    ingresar el dato
+                    solicitado
+                  </div>
+                </div>
+              </mat-form-field>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="btn btn-Crear temp">{{accionActualFinca}}</button>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="text-center col-md-12 mx-auto">
+    <h5 class="display-p title-lines mt-4">Lista Fincas</h5>
+
+    <button class="btn btn-Crear" *ngIf="accionActualFinca!=='Crear' && !modoSelect"
+            (click)="crearFincaCardView()">
+      Crear
+    </button>
+    <p class="display-min2 mt-3">TOTAL FINCAS: {{listaFincasSource.data.length}}</p>
+    <div style="float: right;margin-right: 40px">
+      <mat-form-field>
+        <input autocomplete="off" [(ngModel)]="filtroDataFinca" matInput placeholder="Filtro" class="form-control"
+               type="text"
+               (keyup)="filtrarFincas($event.target.value)">
+        <button mat-button *ngIf="filtroDataFinca!==''" matSuffix mat-icon-button aria-label="Clear"
+                (click)="borrarFiltroFincas()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <table mat-table [dataSource]="listaFincasSource" class="mx-auto text-center" style="width: 100%;">
+
+      <ng-container matColumnDef="codigo">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Codigo</th>
+        <td mat-cell *matCellDef="let element">{{element.codigo}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Nombre Finca</th>
+        <td mat-cell *matCellDef="let element">{{element.nombreFinca}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fechaInspeccion">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Fecha Inspección</th>
+        <td mat-cell *matCellDef="let element">{{element.fechaInspeccion|date:'dd/MM/yyyy'}}</td>
+      </ng-container>
+
+      <!--          <ng-container *ngIf="modoSelect" matColumnDef="seleccionar">-->
+      <!--            <th mat-header-cell *matHeaderCellDef class="text-center">Seleccionar</th>-->
+      <!--            <td mat-cell *matCellDef="let element">-->
+      <!--              <button style="background-color: #1C5531;color: white;height: 37px" mat-button (click)="seleccionarFinca(element)">-->
+      <!--                <mat-icon style="font-size: 25px">add</mat-icon>-->
+      <!--              </button>-->
+      <!--            </td>-->
+      <!--          </ng-container>-->
+
+      <tr mat-header-row *matHeaderRowDef="columnasFincas"></tr>
+      <tr style="cursor: pointer" mat-row
+          [className]="row.codigo===fincaData.codigo? 'finca-select':''"
+          *matRowDef="let row; columns:columnasFincas;"
+          (dblclick)="modificarFincaCardView(row)"></tr>
+    </table>
+    <mat-paginator #fincasPag [pageSizeOptions]="[20, 40, 80,160]" showFirstLastButtons></mat-paginator>
+
+  </div>
+</mat-dialog-content>

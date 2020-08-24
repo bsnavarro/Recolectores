@@ -1,0 +1,93 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+    <mat-toolbar color="primary">
+      <span>{{getUsuario().unidad}}</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <span *ngFor="let item of datosModulo?.navItems">
+        <span *ngIf="item.children && item.children.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <a *ngIf="!item.modoOperacion || item.modoOperacion === 'ruta'"
+                       mat-list-item [routerLink]="[item.route, item.param]" (click)="sidenav.close();">
+                      {{item.displayName}}</a>
+
+                    <a *ngIf="item.modoOperacion === 'click'"
+                       mat-list-item (click)="sidenav.toggle(); setSeleccion(item)">
+                      {{item.displayName}}</a>
+
+                    <a *ngIf="item.modoOperacion === 'item'" mat-list-item>{{item.displayName}}</a>
+
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+               <ng-template matExpansionPanelContent>
+                 <mat-nav-list>
+                   <mat-list-item *ngFor="let child of item.children">
+                     <a *ngIf="child.modoOperacion === 'click'" mat-list-item
+                        (click)="sidenav.toggle(); setSeleccion(child)">
+                    <fa-icon matListIcon matSuffix [icon]="['fas', 'angle-right']"></fa-icon>
+                       {{child.displayName}}
+                     </a>
+                   </mat-list-item>
+                 </mat-nav-list>
+               </ng-template>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </span>
+        <span *ngIf="!item.children || item.children.length === 0">
+          <mat-list-item>
+            <a *ngIf="!item.modoOperacion || item.modoOperacion === 'ruta'"
+               mat-list-item [routerLink]="[item.route, item.param]" (click)="sidenav.close();">
+              <fa-icon matListIcon matSuffix [icon]="['fas', 'angle-right']"></fa-icon>
+              {{item.displayName}}
+            </a>
+          </mat-list-item>
+        </span>
+      </span>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="opened ? sidenav.close() : sidenav.open()" *ngIf="datosModulo?.mostrarMenu">
+        <fa-icon matListIcon matSuffix [icon]="['fas', opened ? 'grip-lines-vertical' : 'bars']"></fa-icon>
+      </button>
+
+
+      <button mat-icon-button (click)="goSistemas()">
+        <fa-icon matListIcon matSuffix [icon]="['fas', 'home']"></fa-icon>
+      </button>
+
+      <button mat-icon-button [routerLink]="['/departamentos']">
+        <fa-icon matListIcon matSuffix [icon]="['fas', 'th-large']"></fa-icon>
+      </button>
+
+
+      <span style="width: 100%;text-align: center">{{datosModulo?.nombreModulo}}</span>
+
+      <!--VISUALIZAR EL NOMBRE DEL MODULO EN EL CENTRO-->
+      <!--MISMA CANTIDAD DE COMPONENTES A LA DERECHA E IZQUIERDA-->
+      <button disabled mat-icon-button>
+      </button>
+      <button disabled mat-icon-button>
+      </button>
+
+      <button mat-icon-button [matMenuTriggerFor]="infoUsuario">
+        <fa-icon matListIcon matSuffix [icon]="['fas', 'user']"></fa-icon>
+      </button>
+
+      <mat-menu #infoUsuario="matMenu">
+        <button mat-menu-item [disabled]="true">
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'user']"></fa-icon>
+          {{getUsuario().nombre}}
+        </button>
+        <button mat-menu-item (click)="salir();">
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'sign-out-alt']"></fa-icon>
+          Cerrar sesión
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

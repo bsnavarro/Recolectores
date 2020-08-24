@@ -1,0 +1,91 @@
+<mat-dialog-content>
+  <mat-toolbar style="width: 100%" class="mat-elevation-z2 mb-2" id="topPersonas">
+    <h4 class="display-p mx-auto">Personas</h4>
+    <i class="material-icons  cerrar-modal" (click)="cerrarModalPersonas()">
+      close
+    </i>
+  </mat-toolbar>
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="tabChanged($event)">
+    <!--    PERSONA RECOLECTORA-->
+    <mat-tab label="Recolectores">
+
+      <div class="container-fluid">
+      </div>
+
+
+      <div class="text-center col-md-12 mx-auto">
+        <h5 class="display-p title-lines mt-4">Lista Recolectores</h5>
+        <button class="btn btn-Crear" *ngIf="accionActualPersonaRecolectora!=='Crear'"
+                (click)="crearPersonaRecolectoraCardView()">
+          Crear
+        </button>
+        <p class="display-min2 mt-3">TOTAL RECOLECTORES: {{listaPersonasRecolectorasSource.data.length}}</p>
+
+        <!--        <div style="float: right;margin-right: 40px">-->
+        <!--          <mat-form-field>-->
+        <!--            <input autocapitalize="off" autocomplete="off" [(ngModel)]="filtroDataPerJuridicos" matInput placeholder="Filtro"-->
+        <!--                   class="form-control" type="text"-->
+        <!--                   (keyup)="filtrarPersonasJuridicas($event.target.value)">-->
+        <!--            <button mat-button *ngIf="filtroDataPerJuridicos!==''" matSuffix mat-icon-button aria-label="Clear"-->
+        <!--                    (click)="borrarFiltroJuridicos()">-->
+        <!--              <mat-icon>close</mat-icon>-->
+        <!--            </button>-->
+        <!--          </mat-form-field>-->
+        <!--        </div>-->
+
+        <!--        <mat-form-field class="text-center" style="float: left;margin-left: 30px">-->
+        <!--          <mat-label>Tipo Persona</mat-label>-->
+        <!--          <mat-select class="form-control text-center" [(value)]="selectTipoPersonaFiltro"-->
+        <!--                      (selectionChange)="filtrarPersonasJuridicasSelect($event)">-->
+        <!--            <mat-option *ngFor="let tipo of tipoPersona" [value]="tipo.value">-->
+        <!--              {{tipo.viewValue}}-->
+        <!--            </mat-option>-->
+        <!--          </mat-select>-->
+        <!--        </mat-form-field>-->
+
+        <table mat-table [dataSource]="listaPersonasRecolectorasSource" class="mx-auto text-center"
+               style="width: 100%;">
+
+          <ng-container matColumnDef="identificacion">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Identificación</th>
+            <td mat-cell *matCellDef="let element">{{element.identificacion}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Nombre</th>
+            <td mat-cell *matCellDef="let element">{{element.nombreCompleto}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="primerApellido">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Primer Apellido</th>
+            <td mat-cell *matCellDef="let element">{{element.primerApellido}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="segundoApellido">
+            <th mat-header-cell *matHeaderCellDef class="text-center">Segundo Apellido</th>
+            <td mat-cell *matCellDef="let element">
+              <!--              <button mat-button (click)="abrirModalDetallPersona(element.cedula)">-->
+              <!--                <mat-icon class="opc-form-modals">remove_red_eye</mat-icon>-->
+              <!--              </button>-->
+              {{element.segundoApellido}}
+            </td>
+          </ng-container>
+
+
+          <tr mat-header-row *matHeaderRowDef="columnasPersonasRecolectoras"></tr>
+          <tr style="cursor: pointer" mat-row
+              [className]="row.identificacion===personaRecolectora.identificacion ? 'persona-select':''"
+              *matRowDef="let row; columns:columnasPersonasRecolectoras;"
+              (dblclick)="modificarPersonaRecolectoraCardView(row)"></tr>
+        </table>
+        <mat-paginator #personasRecolectorasPag [pageSizeOptions]="[20, 40, 80,160]"
+                       showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-tab>
+
+    <!--    PERSONA PRODUCTORA-->
+    <mat-tab label="Productores">
+      <div class="container-fluid"></div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>

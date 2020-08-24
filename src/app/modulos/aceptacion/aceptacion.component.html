@@ -1,0 +1,138 @@
+<div class="principal" fxLayout="column" fxLayoutGap="5px">
+  <mat-card fxLayout="column" class="mat-elevation-z7">
+    <div fxLayout="row" fxLayoutGap="10px">
+      <mat-form-field appearance="outline">
+        <mat-label>Proveedor</mat-label>
+        <input type="text" matInput placeholder="código/cédula" [formControl]="buscaProveedor" (keyup.enter)="buscarProveedor();" (change)="clearProveedor()">
+        <button mat-icon-button matSuffix [disabled]="buscaProveedor.hasError('required')" (click)="buscarProveedor();">
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'search']"></fa-icon>
+        </button>
+        <mat-hint>{{buscaProveedor.value}}</mat-hint>
+        <mat-error *ngIf="buscaProveedor.hasError('required')">Digite un número de proveedor</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="getAcceso(permisos.ACEPTACCION_ACCESO_SISTEMA)" appearance="outline" fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" matInput [ngModel]="proveedor?.nombre" [disabled]="true">
+        <fa-icon matSuffix [icon]="['fas', 'tag']"></fa-icon>
+        <mat-hint>{{proveedor?.codigo}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Departamento</mat-label>
+        <mat-select #dep [formControl]="departamento" (selectionChange)="limpiardatos();">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let dep of getDepartamentos()" [value]="dep.codigo">
+            {{dep.descripcion}}
+          </mat-option>
+        </mat-select>
+        <mat-hint>{{departamento.value}}</mat-hint>
+        <mat-error *ngIf="departamento.hasError('required')">Seleccione un departamento</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="10px">
+      <mat-form-field  appearance="outline" fxFlex>
+        <mat-label>Desde</mat-label>
+        <input matInput [matDatepicker]="bandejaDesde" (focus)="bandejaDesde.open()" [formControl]="desdeBandeja">
+        <mat-datepicker-toggle matSuffix [for]="bandejaDesde"></mat-datepicker-toggle>
+        <mat-datepicker #bandejaDesde disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Hasta</mat-label>
+        <input matInput [matDatepicker]="bandejaHasta" (focus)="bandejaHasta.open()" [formControl]="hastaBandeja">
+        <mat-datepicker-toggle matSuffix [for]="bandejaHasta"></mat-datepicker-toggle>
+        <mat-datepicker #bandejaHasta disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Tipo</mat-label>
+        <mat-select [formControl]="tipoBandeja">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+            {{tipo}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="tipoBandeja.hasError('required')">Seleccione un tipo</mat-error>
+        <mat-hint>{{tipoBandeja.value}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Estado</mat-label>
+        <mat-select [formControl]="estadoBandeja" (selectionChange)="clearSeleccion();">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let estado of estados" [value]="estado">
+            {{estado}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="estadoBandeja.hasError('required')">Seleccione un estado</mat-error>
+        <mat-hint>{{estadoBandeja.value}}</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="10px">
+
+      <div fxLayoutAlign="end" fxFlex>
+        <button mat-stroked-button [disabled]="tipoBandeja.hasError('required') || estadoBandeja.hasError('required') || departamento.hasError('required')" (click)="obtenerFacturasBandeja();">
+          BUSCAR
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'search']"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+  </mat-card>
+
+  <div fxLayoutGap="10px" fxFlex>
+
+    <div fxLayout="column" fxFlex>
+
+        <mat-selection-list #bandejaList dense fxFlex>
+            <mat-list-option [style.background-color]= "getColor(factura.diasdiff)" *ngFor="let factura of getBandeja()" [value]="factura" (contextmenu)="onContextMenu($event, factura)" [disableRipple]="true">
+            <fa-icon matListIcon matSuffix [icon]="['fas', 'file-invoice']" [styles]="{'stroke': '#63a95c', 'color': '#63a95c'}"></fa-icon>
+
+            <h3 matLine> {{factura.numeroCedulaEmisor + ' - ' + factura.clave.substring(21, 41)}}</h3>
+
+            <h2 matLine fxLayoutAlign="start"><strong>{{factura.nombreEmisor}}</strong></h2>
+
+            <p matLine fxLayout="row" fxLayoutGap="5px">
+              <span><strong>Total: </strong>{{factura.totalFactura |  currency: '₡'}}</span>
+              <span><strong>Impuestos: </strong>{{factura.montoTotalImpuesto |  currency: '₡'}}</span>
+            </p>
+              <h2 matLine fxLayoutAlign="start"><strong>{{factura.diasVence < 1 ? 'Vencido' : 'Dias para vencer: ' + (factura.diasVence)}}</strong></h2>
+          </mat-list-option>
+        </mat-selection-list>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div fxLayout="column" fxFlex>
+        <mat-nav-list dense fxFlex [disableRipple]="true">
+          <mat-list-item *ngFor="let factura of getManuales()" (click)="confirmarProcesar(factura)" [ngStyle]="{'pointer-events': !bandejaList.selectedOptions.isEmpty() ? 'auto' : 'none'}" >
+            <fa-icon matListIcon matSuffix [icon]="['fas', 'file-invoice']" [styles]="{'stroke': '#4b77ca', 'color': '#4b77ca'}"></fa-icon>
+            <h3 matLine> {{factura.proveedor + ' - ' + factura.factura}} </h3>
+
+            <h2 matLine fxLayoutAlign="start"><strong>{{factura.nombreProveedor}}</strong></h2>
+
+            <p matLine fxLayout="row" fxLayoutGap="5px">
+              <span><strong>Total: </strong>{{factura.total |  currency: '₡'}}</span>
+              <span><strong>Impuestos: </strong>{{factura.impuesto |  currency: '₡'}}</span>
+            </p>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+  </div>
+</div>
+
+<div style="visibility: hidden; position: fixed"
+     [style.left]="contextMenuPosition.x"
+     [style.top]="contextMenuPosition.y"
+     [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <button mat-menu-item  (mouseover)="hoverItem1 = true" [disabled]="estadoBandeja.value === 'INVALIDO' || item.diasVence < 0" (mouseleave)="hoverItem1 = false" [style.background-color]="hoverItem1 == true  ? '#ff7777' : '#ffffff'" (click)="onContextMenuActionRechazar(item)">RECHAZAR</button>
+    <button mat-menu-item  (mouseover)="hoverItem2 = true" (mouseleave)="hoverItem2 = false" [style.background-color]="hoverItem2 == true  ? '#ffcf77' : '#ffffff'" (click)="onContextMenuActionDescartar(item)">DESCARTAR</button>
+  </ng-template>
+</mat-menu>

@@ -1,0 +1,137 @@
+<div style="overflow: auto !important; height: calc(100vh - 66px)">
+
+
+  <div class="container pt-5">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Identificación</mat-label>
+        <input type="number" matInput placeholder="código/cédula" [formControl]="identificacion"
+               (keyup.enter)="buscar();"
+               (ngModelChange)="ngModelChangePersona()">
+
+        <button mat-icon-button matSuffix [disabled]="identificacion.hasError('required')" (click)="buscar();">
+          <fa-icon matListIcon matSuffix [icon]="['fas', 'search']"></fa-icon>
+        </button>
+        <mat-error *ngIf="identificacion.hasError('required')">Ingrese una identificación</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nombre</mat-label>
+        <input type="text" matInput [ngModel]="persona?.nombreCompleto" [disabled]="true">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="!persona" class="container p-0 m-0">
+
+      <p class="aviso p-0  text-center">Ingrese una identificación para visualizar los datos</p>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="persona">
+    <mat-tab-group fxflex mat-align-tabs="center" color="primary">
+      <mat-tab label="Datos Generales">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+            <app-datos-generales [persona]="persona"></app-datos-generales>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+
+      <mat-tab label="Contacto">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+
+            <mat-form-field appearance="outline" class="disabled" *ngFor="let correo of persona.correos" fxFlex>
+              <input type="text" matInput [ngModel]="correo.correo" [disabled]="true">
+            </mat-form-field>
+
+            <app-correo></app-correo>
+          </div>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Ubicación">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+
+          </div>
+        </ng-template>
+      </mat-tab>
+
+<!--      <mat-tab label="Familia">-->
+<!--        <ng-template matTabContent>-->
+<!--          <div class="container pt-5">-->
+
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </mat-tab>-->
+
+      <mat-tab label="Folio Familiar" *ngIf="persona.codigoFolio">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+            <app-relacion-folio [persona]="persona"></app-relacion-folio>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Tributación">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+            <app-tributacion [persona]="persona"></app-tributacion>
+          </div>
+        </ng-template>
+      </mat-tab>
+
+      <mat-tab label="Movimientos">
+        <ng-template matTabContent>
+          <div class="container pt-5">
+
+          </div>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+
+  <div *ngIf="!persona" class="container p-0">
+
+    <mat-tab-group fxflex mat-align-tabs="center" color="primary">
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="----">
+        <div class="container pt-5">
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+
+  </div>
+
+</div>

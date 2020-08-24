@@ -1,0 +1,22 @@
+<mat-divider *ngIf="item.displayName==='Manual Módulo' "></mat-divider>
+<a mat-list-item [ngStyle]="{'padding-left': (depth * 12) + 'px'}" (click)="onItemSelected(item)"
+  [ngClass]="{'active': item.route ? router.isActive(item.route, true): false, 'expanded': expanded}"
+   class="menu-list-item opciones-menu" style="border-bottom: #1C5531 1px">
+  <mat-icon class="routeIcon">{{item.iconName}}</mat-icon>
+  <mat-icon></mat-icon>
+  {{item.displayName}}
+  <span fxFlex *ngIf="item.children && item.children.length" class="enviar-final">
+    <span fxFlex></span>
+    <mat-icon  [@indicatorRotate]="expanded ? 'expanded': 'collapsed'">
+      expand_more
+    </mat-icon>
+    <mat-icon></mat-icon>
+  </span>
+</a>
+
+<div *ngIf="expanded">
+  <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth+1">
+  </app-menu-list-item>
+</div>
+
+

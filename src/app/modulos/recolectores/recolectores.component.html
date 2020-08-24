@@ -1,0 +1,21 @@
+<!--Barra de Herramientas Cambiar a Compo -->
+<app-top-nav class="fixed-topnav  mb-5" [nombreModulo]="datosModulo.nombreModulo" [mostrarMenu]="datosModulo.mostrarMenu">
+</app-top-nav>
+
+<!--Menú Lateral Cambiar a Compo -->
+<mat-sidenav-container>
+  <mat-sidenav #appDrawer mode="over" opened="false">
+    <mat-nav-list style="width: 300px">
+      <div class="footer-menu">
+        <img src="./assets/img/logo_login.png" height="50" class="rounded-circle mb-2" alt="logo">
+        <p>Versión: 1.0.0 / 1.0.0 </p>
+      </div>
+      <app-menu-list-item *ngFor="let item of datosModulo.navItems" [item]="item"></app-menu-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div style="height: 93vh;">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

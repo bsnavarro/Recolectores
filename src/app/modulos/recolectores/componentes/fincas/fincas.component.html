@@ -1,0 +1,46 @@
+<div class="container-fluid text-center pt-3">
+    <div class="text-center col-md-12 mx-auto">
+      <h5 class="display-p title-lines mt-4">Lista Fincas</h5>
+      <p class="display-min2 mt-3">TOTAL FINCAS: {{listaFincasSource.data.length}}</p>
+      <div style="float: right;margin-right: 40px">
+        <mat-form-field>
+          <input autocomplete="off" [(ngModel)]="filtroDataFinca" matInput placeholder="Filtro" class="form-control"
+                 type="text"
+                 (keyup)="filtrarFincas($event.target.value)">
+          <button mat-button *ngIf="filtroDataFinca!==''" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="borrarFiltroFincas()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <table mat-table [dataSource]="listaFincasSource" class="mx-auto text-center" style="width: 100%;">
+
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Codigo</th>
+          <td mat-cell *matCellDef="let element">{{element.codigo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Nombre Finca</th>
+          <td mat-cell *matCellDef="let element">{{element.nombreFinca}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaInspeccion">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Fecha Inspección</th>
+          <td mat-cell *matCellDef="let element">{{element.fechaInspeccion|date:'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnasFincas"></tr>
+        <tr style="cursor: pointer" mat-row
+            [className]="row.codigo===fincaData.codigo? 'finca-select':''"
+            *matRowDef="let row; columns:columnasFincas;"
+            (dblclick)="modificarFincaCardView(row)"></tr>
+      </table>
+      <mat-paginator #fincasPag [pageSizeOptions]="[20, 40, 80,160]" showFirstLastButtons></mat-paginator>
+
+    </div>
+</div>
+
+
+

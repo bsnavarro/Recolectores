@@ -1,0 +1,71 @@
+<mat-dialog-content fxLayout="column">
+
+  <div class="row">
+    <div class="col-6">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Total</th>
+          <th scope="col">Impuesto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let factura of getDocumentosGasto()">
+          <th scope="row">
+            <fa-icon matListIcon matSuffix
+                     [icon]="['fas', factura.tipo === 'NotaCreditoElectronica' ? 'minus' : 'plus']"
+                     [styles]="{'stroke': '#63a95c', 'color': factura.tipo === 'NotaCreditoElectronica' ? '#CA4540' : '#63a95c'}"></fa-icon>
+          </th>
+          <td class="pr-2 text-right">{{factura.totalFactura | currency: '₡'}}</td>
+          <td class="pr-2 text-right">{{factura.montoTotalImpuesto | currency: '₡'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-6">
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Total</th>
+          <th scope="col">Impuesto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let factura of getDocumentosManual()">
+          <th scope="row">
+            <fa-icon matListIcon matSuffix
+                     [icon]="['fas', factura.tipo === 'NotaCreditoElectronica' ? 'minus' : 'plus']"
+                     [styles]="{'stroke': '#63a95c', 'color': factura.tipo === 'NotaCreditoElectronica' ? '#CA4540' : '#63a95c'}"></fa-icon>
+          </th>
+          <td class="pr-2 text-right">{{factura.total | currency: '₡'}}</td>
+          <td class="pr-2 text-right">{{factura.impuesto | currency: '₡'}}</td>
+        </tr>
+        <tr ngClass="{{getTolerancia() ? 'bg-success  text-white' : 'bg-danger  text-white'}}">
+          <td>
+            <fa-icon matListIcon matSuffix [icon]="['fas', 'equals']"></fa-icon>
+          </td>
+          <td class="pr-2 text-right">{{getDiferenciaTotales().total | currency: '₡'}}</td>
+          <td class="pr-2 text-right">{{getDiferenciaTotales().impuesto | currency: '₡'}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions class="column justify-content-end">
+  <div class="row">
+    <div class="col-7">
+      <button class="btn btn-success" (click)="confirmarRevisar();" *ngIf="!getTolerancia() || !getNumeroDocumentos()">REVISION</button>
+      <button class="btn btn-danger" mat-dialog-close *ngIf="getTolerancia()">CANCELAR</button>
+    </div>
+
+    <div class="col-5">
+      <button class="btn btn-success" (click)="confirmarProcesar();" *ngIf="getTolerancia()">PROCESAR</button>
+      <button class="btn btn-danger" mat-dialog-close *ngIf="!getTolerancia()">SALIR</button>
+    </div>
+  </div>
+</mat-dialog-actions>

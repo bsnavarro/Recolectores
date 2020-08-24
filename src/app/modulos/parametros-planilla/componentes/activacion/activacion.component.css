@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+th.mat-header-cell, td.mat-cell {
+  text-align: center;
+  border: 1px solid #CCC;
+  padding: 0 !important;
+}
+
+.form-inline .form-group{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+fa-icon {
+  font-size: 20px;
+}
+
+.mat-form-field-prefix, .mat-form-field-suffix, .fa-icon {
+  font-size: 24px;
+  color: var(--color-default);
+}
+
+mat-selection-list, mat-nav-list {
+  height: -webkit-fill-available;
+  overflow: auto;
+}

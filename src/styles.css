@@ -1,0 +1,366 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-toolbar {
+  background-color: var(--color-default);
+  color: white;
+}
+
+/*Botones*/
+.btn-Crear {
+  cursor: pointer;
+  background-color: transparent;
+  border-color: #1C5531;
+}
+
+.btn-Crear:hover {
+  background-color: #1C5531;
+  color: white;
+}
+
+/*Fin Botones*/
+
+/*textos*/
+
+/*TITULOS*/
+.title-lines {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title-lines:before,
+.title-lines:after {
+  content: '';
+  border-top: 1px solid;
+  margin: 10px 20px 0;
+  flex: 1 0 20px;
+}
+
+.display-8 {
+  font-size: 2.5rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+.display-9 {
+  font-size: 2.2rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+.display-10 {
+  font-size: 2.0rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+.display-11 {
+  font-size: 1.7rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+/*FIN TITULOS*/
+
+/*PARRAFOS*/
+.display-p {
+  font-size: 1.5rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+.display-p1 {
+  font-size: 1.2rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+.display-min {
+  font-size: 1.1rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+
+.display-min2 {
+  font-size: 0.9rem !important;
+  font-weight: 300 !important;
+  line-height: 1.2 !important;
+}
+
+/*FIN TITULOS*/
+
+
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-default: #1C5531;
+  --color-default-hover: #143b21;
+}
+
+
+
+body {
+  overflow: hidden;
+  /*height: 92vh;*/
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0 !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 2px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e1e1e1;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+
+::-webkit-scrollbar-track {
+  background: #666666;
+  border: 0px none #ffffff;
+  border-radius: 26px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #333333;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.mat-form-field-label {
+  color: black !important;
+}
+
+.mat-form-field-ripple {
+  background-color: var(--color-default) !important;
+}
+
+.mat-form-field-underline {
+  background-color: black !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #1C5531;
+}
+
+.mat-drawer-inner-container {
+  width: 300px !important;
+}
+
+button.mat-icon-button {
+  top: -4px;
+}
+
+.mat-form-field-suffix.ng-tns-c14-4.ng-star-inserted {
+  top: 6px;
+}
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+/*Cambios boostrap*/
+.form-control:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.btn:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+body:not(.user-is-tabbing) button:focus,
+body:not(.user-is-tabbing) input:focus,
+body:not(.user-is-tabbing) select:focus,
+body:not(.user-is-tabbing) textarea:focus {
+  outline: none;
+}
+
+/*Cambios boostrap*/
+
+/*boostrap nativo*/
+.table .thead-dark th {
+  background-color: var(--color-default);
+}
+
+.table td, .table th {
+  vertical-align: middle !important;
+}
+
+/*boostrap nativo*/
+
+.mat-form-field-type-mat-native-select.mat-form-field-disabled .mat-form-field-infix::after, .mat-input-element:disabled {
+  color: #6f6f6f;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick{
+  opacity: 0.3 !important;
+}
+
+.top-input {
+  top: 4px;
+}
+
+.mat-form-field-flex{
+  height: 42px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper{
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+/*.mat-form-field-appearance-outline .mat-form-field-wrapper{*/
+/*top: 8px;*/
+/*}*/
+
+/*.mat-form-field-wrapper{*/
+/*top: -4px;*/
+/*}*/
+
+.mat-form-field-infix{
+  top: -8px;
+}
+
+/*.mat-select-trigger{*/
+/*top: 8px;*/
+/*}*/
+
+.pagination dl, ol, ul{
+  margin-top: 4px;
+}
+
+.aviso {
+  color: #6f6f6f;
+}
+
+.avisoDanger {
+  color: #6f1d1c;
+}
+
+.btn-primary{
+  background-color: var(--color-default);
+  border-color: var(--color-default-hover);
+  top: 4px;
+  position: relative;
+}
+
+.btn-primary:focus{
+  background-color: var(--color-default-hover);
+  border-color: var(--color-default-hover);
+}
+
+.btn-primary:active{
+  background-color: var(--color-default-hover);
+  border-color: var(--color-default-hover);
+}
+
+.btn-primary:disabled{
+  background-color: var(--color-default-hover);
+  border-color: var(--color-default-hover);
+}
+
+.btn-primary:hover{
+  background-color: var(--color-default-hover);
+  border-color: var(--color-default-hover);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle{
+  background-color: var(--color-default-hover);
+  border-color: var(--color-default-hover);
+}
+
+/*.btn-primary:disabled:hover {*/
+/*color: #fff;*/
+/*background-color: var(--color-default-hover);*/
+/*border-color: #28a745;*/
+/*}*/
+
+.mat-slide-toggle.mat-disabled{
+  opacity: 0.8 !important;
+}
+
+
+.fondoVerde{
+  background-color: var(--color-default-hover);
+  color: white;
+}
+
+
+/**Modales*/
+.cerrar-modal {
+  float: right;
+  cursor: pointer;
+}
+
+.cerrar-modal:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'liga';
+}
+
+
+.mat-dialog-container {
+  padding: 0 !important;
+}
+
+mat-dialog-container {
+  padding: 0 !important;
+}
+
+.mat-dialog-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  max-height: none !important;
+}
+

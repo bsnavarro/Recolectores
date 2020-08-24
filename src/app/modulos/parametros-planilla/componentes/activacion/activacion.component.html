@@ -1,0 +1,52 @@
+<form #PlanillaForm="ngForm" (submit)="actualizarEstadoPlanilla(PlanillaForm)"
+      (keydown.enter)="$event.preventDefault()">
+<mat-card>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Seleccione una planilla</mat-label>
+      <mat-select [formControl]="planillaSeleccionada" (selectionChange)="obtenerUnidades();">
+        <mat-option *ngFor="let p of planillaList" [value]="p" [disabled]="p.aplicado === 1">
+          PERIODO {{p.periodo}} - {{p.descripcionPlanilla}}{{p.aplicado === 1 ? ' - (Periodo aplicado)**':''}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button button type="submit" mat-raised-button matTooltip="Realizar acción"
+      *ngIf="planillaSeleccionada.value && unidadesPorPlanilla && unidadesPorPlanilla.length ==0">
+      DESACTIVAR {{planillaSeleccionada.value.descripcionPlanilla}}
+    </button>
+  </mat-card-actions>
+</mat-card>
+</form>
+
+<!--<mat-card *ngIf="planillaSeleccionada.value && unidadesPorPlanilla && unidadesPorPlanilla.length >0">-->
+ <h5 *ngIf="planillaSeleccionada.value && unidadesPorPlanilla && unidadesPorPlanilla.length >0" >
+Lista de unidades desactivadas {{planillaSeleccionada.value.descripcionPlanilla}}</h5>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="descripcionDepartamento">
+      <th mat-header-cell *matHeaderCellDef>Departamento</th>
+      <td mat-cell *matCellDef="let element">
+        {{element.descripcionDepartamento}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcionUnidad">
+      <th mat-header-cell *matHeaderCellDef>Unidad</th>
+      <td mat-cell *matCellDef="let element"> {{element.descripcionUnidad}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="activo">
+      <th mat-header-cell *matHeaderCellDef>Activo</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [checked]="element.activo" (click)="actualizarEstadoUnidad(element)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    </tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons></mat-paginator>
+

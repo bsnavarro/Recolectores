@@ -1,0 +1,18 @@
+mat-list-option, mat-list-item {
+  border-bottom: groove #9E9E9E;
+  border-bottom-width: thin;
+}
+
+/*mat-list, mat-list-item {*/
+  /*border-radius: 5px;*/
+/*}*/
+
+/*.mat-dialog-content {*/
+  /*max-height: 85vh;*/
+  /*height: -webkit-fill-available !important;*/
+/*}*/
+
+/*.example-box.cdk-drag-disabled {*/
+  /*background: #ccc;*/
+  /*cursor: default;*/
+/*}*/

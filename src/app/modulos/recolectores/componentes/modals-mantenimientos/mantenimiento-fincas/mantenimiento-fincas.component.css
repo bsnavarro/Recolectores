@@ -1,0 +1,9 @@
+.mat-toolbar {
+  background-color: var(--color-default);
+  color: white;
+}
+
+.finca-select {
+  background-color: rgba(0, 130, 86, 0.1);
+}
+

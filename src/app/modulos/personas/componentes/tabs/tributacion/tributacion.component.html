@@ -1,0 +1,96 @@
+<div class="container text-center">
+
+
+  <div class="pt-2">
+
+    <p class="aviso pt-2">Caracteristicas</p>
+
+    <!--//PERMISOS y CAMBIAR GENERA FACTURA SEGUN REGIMENE (REA)-->
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Sujeto a impuestos</mat-label>
+          <mat-select
+            [disabled]="true"
+            [value]="persona?.personaTributacion?.noSujetoImpuesto"
+            (selectionChange)="actualizarPersonaTributacion()">
+            <mat-option [value]="true">
+              SI
+            </mat-option>
+            <mat-option [value]="false">
+              NO
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Emite Factura Electr.</mat-label>
+          <mat-select
+            [disabled]="!persona?.personaTributacion?.permiteEditarGeneraFC"
+            [value]="!persona?.personaTributacion?.generaFacturaCompra"
+            (selectionChange)="actualizarPersonaTributacion()">
+            <mat-option [value]="true">
+              SI
+            </mat-option>
+            <mat-option [value]="false">
+              NO
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+
+    <div class="row pt-2">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Regimen</mat-label>
+        <input type="text" matInput
+               [ngModel]="persona?.personaTributacion?.personaTributacionRegimenByCodigoRegimen?.descripcion"
+               [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Estado</mat-label>
+        <input type="text" matInput [ngModel]="persona?.personaTributacion?.estadoHacienda" [disabled]="true">
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+  <div class="dropdown-divider"></div>
+
+
+  <p *ngIf="persona?.personaTributacion?.actividades?.length > 0" class="aviso pt-5">Actividades</p>
+
+  <div class="row">
+    <div *ngFor="let actividad of persona?.personaTributacion?.actividades" fxFlex>
+      <mat-form-field appearance="outline">
+        <mat-label>Codigo</mat-label>
+        <input type="text" matInput [ngModel]="actividad.codigo" [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Descripción</mat-label>
+        <input type="text" matInput [ngModel]="actividad.descripcion" [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Estado</mat-label>
+        <input type="text" matInput [ngModel]="actividad.estado" [disabled]="true">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <input type="text" matInput [ngModel]="actividad.tipo" [disabled]="true">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+</div>
+
+

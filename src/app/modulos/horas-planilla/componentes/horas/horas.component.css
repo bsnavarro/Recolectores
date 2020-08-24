@@ -1,0 +1,123 @@
+table {
+  width: 100%;
+}
+
+th.mat-header-cell, td.mat-cell {
+  text-align: center;
+  border: 1px solid #CCC;
+  padding: 0 !important;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 90%;
+}
+
+
+.mat-column-identificacion{
+  width: 5%!important;
+}
+
+.mat-column-nombreCompleto{
+  width: 18%!important;
+}
+
+.mat-column-planilla{
+  width: 3%!important;
+}
+
+.mat-column-periodo{
+  width: 3%!important;
+}
+
+.mat-column-horasD,
+.mat-column-horasExtraD,
+.mat-column-horasDobleD,
+.mat-column-horasAjusteD,
+.mat-column-horasM,
+.mat-column-horasExtraM,
+.mat-column-horasDobleM,
+.mat-column-horasAjusteM,
+.mat-column-horasN,
+.mat-column-horasExtraN,
+.mat-column-horasDobleN,
+.mat-column-horasAjusteN {
+  width: auto
+}
+
+.mat-column-grupoColaborador,
+.mat-column-grupoHorasD,
+.mat-column-grupoHorasM,
+.mat-column-grupoHorasN
+{
+  font-size: medium;
+  color: black;
+  border-color: black;
+}
+
+.mat-column-grupoTotales {
+  text-align: center;
+  font-weight:bold;
+  background: lightgrey;
+  border-color: black;
+}
+
+.mat-column-totalColaborador1,
+.mat-column-totalColaboradorE,
+.mat-column-totalColaboradorD
+{
+  text-align: center;
+  font-weight:bold;
+  background: lightgrey;
+}
+
+.mat-header-cell
+{
+  font-size: inherit;
+  color: black;
+}
+
+::ng-deep .mat-column-horasD div.mat-form-field-infix,
+::ng-deep .mat-column-horasExtraD div.mat-form-field-infix,
+::ng-deep .mat-column-horasDobleD div.mat-form-field-infix,
+::ng-deep .mat-column-horasAjusteD div.mat-form-field-infix,
+
+::ng-deep .mat-column-horasM div.mat-form-field-infix,
+::ng-deep .mat-column-horasExtraM div.mat-form-field-infix,
+::ng-deep .mat-column-horasDobleM div.mat-form-field-infix,
+::ng-deep .mat-column-horasAjusteM div.mat-form-field-infix,
+
+::ng-deep .mat-column-horasN div.mat-form-field-infix,
+::ng-deep .mat-column-horasExtraN div.mat-form-field-infix,
+::ng-deep .mat-column-horasDobleN div.mat-form-field-infix,
+::ng-deep .mat-column-horasAjusteN div.mat-form-field-infix
+{ width: 15% !important;
+  text-align: center;
+  font-weight:bold;
+}
+
+::ng-deep .mat-column-planilla .mat-cell,
+::ng-deep .mat-column-periodo .mat-cell
+{ width: 5% !important;
+  text-align: center;
+  font-weight:bold;
+}
+
+tr.mat-footer-row {
+  text-align: center;
+  font-weight: bold;
+  background: lightgrey;
+}
+
+.mat-table .mat-row:hover {
+  background: #e3ece4;
+}
+
+fa-icon {
+  font-size: 20px;
+}
+
+.colaboradorDeshabilitado{
+  background: #f0f0b3;
+}
+

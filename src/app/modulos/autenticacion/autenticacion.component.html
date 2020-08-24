@@ -1,0 +1,38 @@
+<div class="login-page">
+  <div class="top-login"></div>
+  <div class="container login-form">
+    <div class="text-center">
+      <h4 class="display-8 mb-4">Portal..........</h4>
+    </div>
+
+    <div class="col-md-8 mx-auto text-center">
+      <form [formGroup]="loginForm" (submit)="ingresar()" >
+        <mat-card class="mat-elevation-z3">
+
+          <mat-form-field class="col-md-8 mx-auto mt-2 mb-2 text-center">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput placeholder="Digite su usuario" formControlName="usuario" class="form-control">
+            <mat-error *ngIf="loginForm.get('usuario').invalid">Este campo es requerido</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-8 mx-auto text-center">
+            <mat-icon matSuffix>lock</mat-icon>
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput placeholder="Digite su contraseña" formControlName="password"
+                   class="form-control">
+            <mat-error *ngIf="loginForm.get('password').invalid">Este campo es requerido</mat-error>
+          </mat-form-field>
+          <hr>
+          <button type="submit" class="btn btn-Crear col-md-4 mb-2 mt-2">Ingresar</button>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+
+  <footer id="footer" class="text-center">
+    <a class="display-p">Versión</a>
+  </footer>
+
+</div>
+
